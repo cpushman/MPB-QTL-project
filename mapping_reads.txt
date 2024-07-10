@@ -1,0 +1,7 @@
+module load samtools/1.9
+module load bwa/0.7.12
+#map reads
+for f in *.fq; do bwa mem -M -t 24 ../GCA_020466585.1_Dpon_F_20191213_genomic.fna $f > $f.sam; samtools view -bS $f.sam  > $f.bam; done
+#sort
+for f in *bam; do samtools sort $f -o $f.s; done
+#used mv command at this point to rename everything from barcode into arbitrary numbers as ID

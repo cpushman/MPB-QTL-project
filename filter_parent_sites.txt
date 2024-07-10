@@ -1,0 +1,2 @@
+grep -v 'A/C' parents_filtered.tab | grep -v 'C/A' | grep -v 'A/T' | grep -v 'T/A' | grep -v 'A/G' | grep -v 'G/A' | grep -v 'C/T' | grep -v 'T/C' | grep -v 'C/G' | grep -v 'G/C' | grep -v 'T/G' | grep -v 'G/T' > no_hets_parents.tab
+grep 'A/A\|G/G\|T/T\|C/C' no_hets_parents.tab > no_hets_no_missing_parents.tab

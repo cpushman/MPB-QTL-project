@@ -1,0 +1,10 @@
+module load stacks/1.48
+srun process_radtags -f 140819_I1135_FCC5AL8ACXX_L5_MPB_QTL_PLATE01_1.fq.gz -o ./samples1/ -b ND_eight_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f 140819_I1135_FCC5AL8ACXX_L5_MPB_QTL_PLATE01_1.fq.gz -o ./samples1/ -b ND_nine_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f 140819_I1135_FCC5AL8ACXX_L5_MPB_QTL_PLATE01_1.fq.gz -o ./samples1/ -b ND_ten_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L6_MPB_QTL_PLATE02_1.fq.gz -o ./samples2/ -b ND_eight_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L6_MPB_QTL_PLATE02_1.fq.gz -o ./samples2/ -b ND_nine_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L6_MPB_QTL_PLATE02_1.fq.gz -o ./samples2/ -b ND_ten_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L7_MPB_QTL_PLATE03_1.fq.gz -o ./samples3/ -b ND_eight_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L7_MPB_QTL_PLATE03_1.fq.gz -o ./samples3/ -b ND_nine_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10
+srun process_radtags -f .../140819_I1135_FCC5AL8ACXX_L7_MPB_QTL_PLATE03_1.fq.gz -o ./samples3/ -b ND_ten_bp_barcodes.txt -e ecoRI -E phred64 -c -q --len_limit 10

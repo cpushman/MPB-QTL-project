@@ -1,0 +1,13 @@
+module load vcftools/gnu/0.1.13
+module load tabix/1.10
+module load samtools/1.9
+#parents
+vcftools --vcf parents_merged.vcf --minGQ 30 --minDP 20 --min-alleles 2 --max-alleles 2 --remove-indels --remove-filtered-all --recode --out parents_filtered
+bgzip parents_filtered.recode.vcf
+tabix -p vcf parents_filtered.recode.vcf.gz
+zcat parents_filtered.recode.vcf.gz | vcf-to-tab > parents_filtered.tab
+#f2
+vcftools --vcf F2_mergedFINAL.vcf --minGQ 30 --minDP 20 --min-alleles 2 --max-alleles 2 --remove-indels --remove-filtered-all --recode --out F2_filtered_pls
+bgzip F2_filtered_pls.recode.vcf
+tabix -p vcf F2_filtered_pls.recode.vcf.gz
+zcat vcf F2_filtered_pls.recode.vcf.gz | vcf-to-tab > F2_filtered_pls.tab

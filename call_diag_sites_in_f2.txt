@@ -1,0 +1,7 @@
+module load vcftools/gnu/0.1.13
+module load tabix/1.10
+module load samtools/1.9
+vcftools --vcf F2_filtered_pls.recode.vcf --positions parentpositions_rmvd1.txt --recode --out  diag_positions
+bgzip diag_positions.recode.vcf 
+tabix -p vcf diag_positions.recode.vcf.gz
+zcat vcf diag_positions.recode.vcf.gz | vcf-to-tab > offspring_calls_pls.tab

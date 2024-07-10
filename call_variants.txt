@@ -1,0 +1,8 @@
+module load gatk/3.8
+module load java/1.8.0_131
+#I separated all the individual's IDs into 7 lists and named the files subset[1:7].list Parents were placed into 2 additional subsets. 
+# I just did this so i could call the variants using different jobs at the same time and make it go faster
+#this is an example of the command I used to call variants for the individuals in subset 3
+java -jar $GATK -T UnifiedGenotyper -R .../GCA_020466585.1_Dpon_F_20191213_genomic.fasta -I subset3.list -fixMisencodedQuals -o subset3.vcf -nt 24
+#then I combined the parents into one VCF and the F2's into another
+java -jar $GATK -T CombineVariants -R .../GCA_020466585.1_Dpon_F_20191213_genomic.fasta --variant subset1FINAL.vcf --variant subset2.vcf --variant subset3.vcf --variant subset4.vcf --variant subset5.vcf --variant subset6.vcf --variant subset7.vcf --variant subset8FINAL.vcf -o F2_merged.vcf -genotypeMergeOptions UNIQUIFY -nt 4

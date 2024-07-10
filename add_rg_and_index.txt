@@ -1,0 +1,5 @@
+module load samtools/1.9
+module load picard/2.25.1
+module load java/1.8.0
+for f in *.s.bam; do java -jar $PICARD AddOrReplaceReadGroups INPUT=$f OUTPUT=${f/.s.bam/.s.h.bam} RGLB=${f/.s.bam/} RGPL=illumina RGPU=${f/.s.bam/} RGSM=${f/.s.bam/} VALIDATION_STRINGENCY=LENIENT; done
+for f in *.s.h.bam ; do samtools index $f ; done

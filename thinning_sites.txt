@@ -1,0 +1,12 @@
+module load vcftools/gnu/0.1.13
+module load tabix/1.10
+module load samtools/1.9
+#I did multiple iterations of this but I thought that the 100,000bp output seemed most reasonable
+vcftools --vcf diag_positions3k.recode.vcf --thin 100000 --recode --out thinned100000
+bgzip thinned100000.recode.vcf 
+tabix -p vcf thinned100000.recode.vcf.gz
+zcat vcf thinned100000.recode.vcf.gz | vcf-to-tab > thinned100000.tab
+#then I used sed/awk to format the vcf sites to be the same naming scheme as those in reasonable#once I have a list using the correct names, I can just use the drop.markers function to omit all markers EXCEPT these
+sed -i.og 's/JAFETG01000000//g' thinned100000.tab
+sed -i.og 's/JAFETG0100000//g' thinned100000.tab
+awk 'BEGIN { FS=OFS="\t" }{str1 = $1; str2 = "_"; str3 = $2; str4 = str1 str2 str3; print str4 }' thinned1000.tab > thinned100000markers.txt

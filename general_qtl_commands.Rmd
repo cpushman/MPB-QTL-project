@@ -1,0 +1,76 @@
+---
+title: "R Notebook"
+output: html_notebook
+editor_options: 
+  chunk_output_type: console
+---
+#this is all condensed but these are the main commands I used for the final dataset to get my results
+
+```{r}
+library(qtl)
+est15 <- read.cross(c("csv"), dir="\\Users\\cpushman\\OneDrive - Indiana University\\Documents\\QTL2023\\EstimatingMap\\est14_formatted\\est15\\","est15.csv.csv", estimate.map = FALSE, genotypes = c("AA","AB","BB"), alleles = c("A","B"), na.strings = c("-"))
+```
+
+```{r}
+plotMap(est15)
+plotMap(est15_F, est15_M, col=c("red","blue"))
+plotRF(est15)
+```
+
+#find qtl
+```{r body size, EM}
+operm.size_est15 <- scanone(est15, method="em", n.perm=1000, perm.Xsp = TRUE, pheno.col="size")
+out.size_est15 <- scanone(est15, method=c("em"), pheno.col="size")
+summary(operm.size_est15, alpha=0.05)
+#Autosome LOD thresholds (1000 permutations)
+#    lod
+#5% 3.55
+#X chrosome LOD thresholds (5417 permutations)
+#   lod
+#5% 3.82
+plot(out.size_est15, ylim=c(0,30))
+abline(h=3.55, col="black", lty=2)
+abline(h=3.82, col="red", lty=2)
+x<-5
+y <- 29
+#legend(x, y, legend=c("LOD Cutoff (Autosomes)", "LOD Cutoff (X chrosome)"), fill=c("black","red"))
+
+summary(out.size_est15, perms=operm.size_est15, alpha=0.05, pvalues=TRUE)
+#There were no LOD peaks above the threshold.
+```
+
+```{r dev time, EM}
+operm.dev_est15 <- scanone(est15, method="em", n.perm=1000, perm.Xsp = TRUE, pheno.col="dev_time")
+out.dev_est15 <- scanone(est15, method=c("em"), pheno.col="dev_time")
+summary(operm.dev_est15, alpha=0.05)
+#Autosome LOD thresholds (1000 permutations)
+#    lod
+#5% 3.67
+#X chrosome LOD thresholds (5417 permutations)
+#   lod
+#5% 7.02
+par(cex=1.25)
+plot(out.dev_est15)
+abline(h=3.67, col="black", lty=2)
+abline(h=7.02, col="red", lty=2)
+x<-5
+y <- 29
+legend(x, y, legend=c("LOD Cutoff (Autosomes)", "LOD Cutoff (X chrosome)"), fill=c("black","red"), bty="n")
+
+summary(out.dev_est15, perms=operm.dev_est15, alpha=0.05, pvalues=TRUE)
+#         chr pos  lod pval
+#58292009   X 132 29.8    0
+lodint(out.dev_est15, chr=c('X'), 1.5)
+#          chr    pos      lod
+#54864198   X 125.5655 27.59975
+#58292009   X 131.6250 29.82101
+#59720093   X 135.6476 23.66637
+```
+
+#plot PXG
+```{r}
+plotPXG(est15, pheno.col="dev_time", marker="58292009", main="", infer=FALSE, ylab="Development Time (Days)", col=c("black"))
+
+#I PREFER THE PLOT ABOVE BUT THIS IS ANOTHER WAY TO SHOW IT
+#effectplot(est14_formatted, pheno.col="dev_time", mname1="1.1_58292009", main="Genotype x Development Time")
+```
